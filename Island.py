@@ -14,7 +14,7 @@ def choose_index(i, n):
     return 0
 
 
-def probability_death(x: int, y: int, m: int, n: int):
+def probability_death(x: int, y: int, m: int, n: int, safe_list:list):
     dp = []
     ls = [0, n - 1]
     for i in range(n):
@@ -37,6 +37,7 @@ def probability_death(x: int, y: int, m: int, n: int):
                 if (i in ls or j in ls) and k==1:
                     continue
                 print(i, j, k, dp[i][j][k])
+
                 if i < n - 1:
                     dp[i][j][k] += dp[i + 1][j][k - 1] / 4
                 else:
@@ -56,6 +57,9 @@ def probability_death(x: int, y: int, m: int, n: int):
                     dp[i][j][k] += dp[i][j - 1][k - 1] / 4
                 else:
                     dp[i][j][k] += 0.25
+
+                if [i, j] in safe_list:
+                    dp[i][j][k] = 0
                 print(i, j, k, dp[i][j][k])
 
 
@@ -70,4 +74,6 @@ x = 1
 y = 1
 m = 3
 # print(probability_death(x, y, m, n))
-print(probability_death(1, 1, 4, 5))
+safe_list = [[1,3], [3, 1], ]
+# safe_list = []
+print(probability_death(1, 1, 2, 3, safe_list))
